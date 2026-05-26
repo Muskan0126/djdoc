@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pools.apps.PoolsConfig',
+    'operations',
+    'todo',
 ]
+
+AUTH_USER_MODEL = "operations.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,7 +80,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'userDB',
+        'NAME': 'testdb',
         'USER': 'postgres',
         'PASSWORD': '123456',
         'PORT' : '5432',
