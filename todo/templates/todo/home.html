@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Todo List</title>
+</head>
+
+<body>
+
+    <h1>Todo List</h1>
+
+    <!-- CREATE TASK -->
+
+    <form
+        method="POST"
+        action="/todo/"
+    >
+
+        {% csrf_token %}
+
+        <input
+            type="hidden"
+            name="user"
+            value="{{ request.GET.user_id }}"
+        >
+
+        <input
+            type="text"
+            name="title"
+            placeholder="Enter title"
+        >
+
+        <br><br>
+
+        <textarea
+            name="description"
+            placeholder="Enter description"
+        ></textarea>
+
+        <br><br>
+
+        <button type="submit">
+            Create
+        </button>
+
+    </form>
+
+    <hr>
+
+    {% for task in tasks %}
+
+        <div>
+
+            <!-- UPDATE TASK -->
+
+            <form
+                method="POST"
+                action="/todo/{{ task.id }}/"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ task.user.id }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="_method"
+                    value="PATCH"
+                >
+
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ task.title }}"
+                >
+
+                <br><br>
+
+                <textarea
+                    name="description"
+                >{{ task.description }}</textarea>
+
+                <br><br>
+
+                <label>
+                    Completed
+                </label>
+
+                <input
+                    type="checkbox"
+                    name="completed"
+                    {% if task.completed %}
+                    checked
+                    {% endif %}
+                >
+
+                <br><br>
+
+                <button type="submit">
+                    Update
+                </button>
+
+            </form>
+
+            <br>
+
+            <!-- DELETE TASK -->
+
+            <form
+                method="POST"
+                action="/todo/{{ task.id }}/"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ task.user.id }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="_method"
+                    value="DELETE"
+                >
+
+                <button type="submit">
+                    Delete
+                </button>
+
+            </form>
+
+            <hr>
+
+        </div>
+
+    {% endfor %}
+
+</body>
+
+</html>
